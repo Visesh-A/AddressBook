@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,8 +17,10 @@ namespace AddressBookSystem
         {
             Console.WriteLine("Enter First Name");
             Contacts.FirstName = Console.ReadLine();
-            int a = Unique(Contacts.FirstName);
-            if (a == 0)
+            //int a = CheckUnique(Contacts.FirstName);
+            // if (a == 0)
+            int b = CheckDuplicate(Contacts.FirstName);
+            if (b == 0)
             {
                 Console.WriteLine("Enetr Last Name");
                 Contacts.LastName = Console.ReadLine();
@@ -37,7 +40,7 @@ namespace AddressBookSystem
                 dict.Add(Contacts.FirstName, AddressBook);
             }
         }
-        public int Unique(string name)
+        public int CheckUnique(string name)
         {
             int flag = 0;
             if (dict.Count != 0)
@@ -46,7 +49,7 @@ namespace AddressBookSystem
                 {
                     foreach (var item in data.Value)
                     {
-                        if (data.Key.Equals(name))
+                        if (data.Key == name)
                         {
                             Console.WriteLine("The Name You have given is Already Present");
                             flag = 1;
@@ -57,11 +60,34 @@ namespace AddressBookSystem
             }
             return flag;
         }
+        public int CheckDuplicate(string name)
+        {
+            int sum = 0;
+            if (dict.Count != 0)
+            {
+                foreach (var data in dict)
+                {
+                    foreach (var item in data.Value)
+                    {
+                        Console.WriteLine(data.Key.Any(x => x.Equals(name)));
+                        if (data.Key.Any(x => x.Equals(name)))
+                        {
+                            Console.WriteLine("Duplicate is present");
+                            sum = 1;
+                            break;
+                        }
+                    }
+                }
+
+            }
+            return sum;
+        }
         public void Display()
         {
             foreach (var data in AddressBook)
             {
-                Console.WriteLine("First name: " + data.FirstName + "\nLastname: " + data.LastName + "\nAddress: " + data.Address + "\nCity: " + data.City + "\nState: " + data.State + "\nZIP: " + data.ZIP + "\nPhone Number: " + data.PhoneNumber + "\nEmail: " + data.Email);
+                Console.WriteLine("First name: " + Contacts.FirstName + "\nLastname: " + Contacts.LastName + "\nAddress: " + Contacts.Address +
+                  "\nCity: " + Contacts.City + "\nState: " + Contacts.State + "\nZIP: " + Contacts.ZIP + "\nPhone Number: " + Contacts.PhoneNumber + "\nEmail: " + Contacts.Email);
             }
         }
         public void Edit()
