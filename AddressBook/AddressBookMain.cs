@@ -10,35 +10,35 @@ namespace AddressBookSystem
 {
     public class AddressBookMain
     {
-        CreateContacts Contacts = new CreateContacts();
         List<CreateContacts> AddressBook = new List<CreateContacts>();
+        CreateContacts Contacts = new CreateContacts();
         Dictionary<string, List<CreateContacts>> dict = new Dictionary<string, List<CreateContacts>>();
         public void addcontact()
         {
             Console.WriteLine("Enter First Name");
             Contacts.FirstName = Console.ReadLine();
             //int a = CheckUnique(Contacts.FirstName);
-            // if (a == 0)
-            int b = CheckDuplicate(Contacts.FirstName);
-            if (b == 0)
-            {
-                Console.WriteLine("Enetr Last Name");
-                Contacts.LastName = Console.ReadLine();
-                Console.WriteLine("Enter Address");
-                Contacts.Address = Console.ReadLine();
-                Console.WriteLine("Enter City");
-                Contacts.City = Console.ReadLine();
-                Console.WriteLine("Enter State");
-                Contacts.State = Console.ReadLine();
-                Console.WriteLine("Enter ZIP");
-                Contacts.ZIP = Console.ReadLine();
-                Console.WriteLine("Enetr Phone NUmber");
-                Contacts.PhoneNumber = Console.ReadLine();
-                Console.WriteLine("Enter Email");
-                Contacts.Email = Console.ReadLine();
-                AddressBook.Add(Contacts);
-                dict.Add(Contacts.FirstName, AddressBook);
-            }
+            //if (a == 0)
+            // int b = CheckDuplicate(Contacts.FirstName);
+            // if (b == 0)
+            //{
+            Console.WriteLine("Enetr Last Name");
+            Contacts.LastName = Console.ReadLine();
+            Console.WriteLine("Enter Address");
+            Contacts.Address = Console.ReadLine();
+            Console.WriteLine("Enter City");
+            Contacts.City = Console.ReadLine();
+            Console.WriteLine("Enter State");
+            Contacts.State = Console.ReadLine();
+            Console.WriteLine("Enter ZIP");
+            Contacts.ZIP = Console.ReadLine();
+            Console.WriteLine("Enetr Phone NUmber");
+            Contacts.PhoneNumber = Console.ReadLine();
+            Console.WriteLine("Enter Email");
+            Contacts.Email = Console.ReadLine();
+            AddressBook.Add(Contacts);
+            dict.Add(Contacts.FirstName, AddressBook);
+            // }
         }
         public int CheckUnique(string name)
         {
@@ -52,7 +52,7 @@ namespace AddressBookSystem
                         if (data.Key == name)
                         {
                             Console.WriteLine("The Name You have given is Already Present");
-                            flag = 1;
+                            flag++;
                             break;
                         }
                     }
@@ -60,26 +60,34 @@ namespace AddressBookSystem
             }
             return flag;
         }
+        public void SearchPersonUsingCity(string firstname, string city)
+        {
+            foreach (var data in dict)
+            {
+                if (dict.Keys.Equals(firstname))
+                {
+                    var cityList = data.Value.Where(x => x.City.Equals(city)).ToList();
+                    foreach (var item in cityList)
+                    {
+                        Console.WriteLine("First Name:- " + item.FirstName + "Last Name:- " + item.LastName + "City Name:-" + item.City + "State:- " + item.State + "ZIP code:- " + item.ZIP + "Phonenumber:- " + item.PhoneNumber + "Email:- " + item.Email);
+                    }
+                }
+            }
+        }
         public int CheckDuplicate(string name)
         {
             int sum = 0;
             if (dict.Count != 0)
-            {
                 foreach (var data in dict)
                 {
                     foreach (var item in data.Value)
-                    {
-                        Console.WriteLine(data.Key.Any(x => x.Equals(name)));
                         if (data.Key.Any(x => x.Equals(name)))
                         {
                             Console.WriteLine("Duplicate is present");
                             sum = 1;
                             break;
                         }
-                    }
                 }
-
-            }
             return sum;
         }
         public void Display()
