@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,32 +14,34 @@ namespace AddressBookSystem
         List<CreateContacts> AddressBook = new List<CreateContacts>();
         CreateContacts Contacts = new CreateContacts();
         Dictionary<string, List<CreateContacts>> dict = new Dictionary<string, List<CreateContacts>>();
+        Dictionary<string, List<CreateContacts>> city = new Dictionary<string, List<CreateContacts>>();
+        Dictionary<string, List<CreateContacts>> state = new Dictionary<string, List<CreateContacts>>();
         public void addcontact()
         {
             Console.WriteLine("Enter First Name");
             Contacts.FirstName = Console.ReadLine();
             //int a = CheckUnique(Contacts.FirstName);
             //if (a == 0)
-            // int b = CheckDuplicate(Contacts.FirstName);
-            // if (b == 0)
-            //{
-            Console.WriteLine("Enetr Last Name");
-            Contacts.LastName = Console.ReadLine();
-            Console.WriteLine("Enter Address");
-            Contacts.Address = Console.ReadLine();
-            Console.WriteLine("Enter City");
-            Contacts.City = Console.ReadLine();
-            Console.WriteLine("Enter State");
-            Contacts.State = Console.ReadLine();
-            Console.WriteLine("Enter ZIP");
-            Contacts.ZIP = Console.ReadLine();
-            Console.WriteLine("Enetr Phone NUmber");
-            Contacts.PhoneNumber = Console.ReadLine();
-            Console.WriteLine("Enter Email");
-            Contacts.Email = Console.ReadLine();
-            AddressBook.Add(Contacts);
-            dict.Add(Contacts.FirstName, AddressBook);
-            // }
+            //int b = CheckDuplicate(Contacts.FirstName);
+            //if (b == 0)
+            {
+                Console.WriteLine("Enetr Last Name");
+                Contacts.LastName = Console.ReadLine();
+                Console.WriteLine("Enter Address");
+                Contacts.Address = Console.ReadLine();
+                Console.WriteLine("Enter City");
+                Contacts.City = Console.ReadLine();
+                Console.WriteLine("Enter State");
+                Contacts.State = Console.ReadLine();
+                Console.WriteLine("Enter ZIP");
+                Contacts.ZIP = Console.ReadLine();
+                Console.WriteLine("Enetr Phone NUmber");
+                Contacts.PhoneNumber = Console.ReadLine();
+                Console.WriteLine("Enter Email");
+                Contacts.Email = Console.ReadLine();
+                AddressBook.Add(Contacts);
+                dict.Add(Contacts.FirstName, AddressBook);
+            }
         }
         public int CheckUnique(string name)
         {
@@ -60,20 +63,6 @@ namespace AddressBookSystem
             }
             return flag;
         }
-        public void SearchPersonUsingCity(string firstname, string city)
-        {
-            foreach (var data in dict)
-            {
-                if (dict.Keys.Equals(firstname))
-                {
-                    var cityList = data.Value.Where(x => x.City.Equals(city)).ToList();
-                    foreach (var item in cityList)
-                    {
-                        Console.WriteLine("First Name:- " + item.FirstName + "Last Name:- " + item.LastName + "City Name:-" + item.City + "State:- " + item.State + "ZIP code:- " + item.ZIP + "Phonenumber:- " + item.PhoneNumber + "Email:- " + item.Email);
-                    }
-                }
-            }
-        }
         public int CheckDuplicate(string name)
         {
             int sum = 0;
@@ -89,6 +78,43 @@ namespace AddressBookSystem
                         }
                 }
             return sum;
+        }
+        public void SearchPersonUsingCity(string firstname, string city)
+        {
+            foreach (var data in dict)
+            {
+                if (dict.Keys.Equals(firstname))
+                {
+                    var citylist = data.Value.Where(x => x.Equals(city)).ToList();
+                    foreach (var item in citylist)
+                    {
+                        Console.WriteLine("First Name:- " + item.FirstName + "Last Name:- " + item.LastName + "City Name:-" + item.City + "State:- " + item.State + "ZIP code:- " + item.ZIP + "Phonenumber:- " + item.PhoneNumber + "Email:- " + item.Email);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("The first name doesnot exits hear");
+                }
+            }
+        }
+        public void SearchingByCityAndState(string city, string state)
+        {
+            foreach (var data in dict)
+            {
+                Console.WriteLine("Key:- " + data.Key);
+                var resultCity = data.Value.Where(x => x.City.Equals(Contacts.City)).ToList();
+                foreach (var item in resultCity)
+                {
+
+                    Console.WriteLine("First Name:- " + item.FirstName + " Last Name:- " + item.LastName + " City Name:-" + item.City + " State:- " + item.State + " ZIP code:- " + item.ZIP + " Phonenumber:- " + item.PhoneNumber + " Email:- " + item.Email);
+                }
+                // Console.WriteLine("Key:- "+data.Key);
+                var resultState = data.Value.Where(x => x.State.Equals(Contacts.State)).ToList();
+                foreach (var val in resultState)
+                {
+                    Console.WriteLine("First Name:- " + val.FirstName + " Last Name:- " + val.LastName + " City Name:-" + val.City + " State:- " + val.State + " ZIP code:- " + val.ZIP + " Phonenumber:- " + val.PhoneNumber + " Email:- " + val.Email);
+                }
+            }
         }
         public void Display()
         {
