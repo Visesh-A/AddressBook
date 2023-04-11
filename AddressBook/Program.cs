@@ -25,6 +25,7 @@ namespace AddressBookSystem
                         break;
                     case 2:
                         addressBookMain.Edit();
+                        addressBookMain.Display();
                         break;
                     case 3:
                         addressBookMain.DeleteContact();
