@@ -43,6 +43,34 @@ namespace AddressBookSystem
                 dict.Add(Contacts.FirstName, AddressBook);
             }
         }
+        public void ByCity(string city)
+        {
+            foreach (var data in dict)
+            {
+                if (dict.Keys.Equals(city))
+                {
+                    var citylist = data.Value.Where(x => x.Equals(city)).ToList();
+                    foreach (var item in citylist)
+                    {
+                        Console.WriteLine("First Name:- " + item.FirstName + "Last Name:- " + item.LastName + "City Name:-" + item.City + "State:- " + item.State + "ZIP code:- " + item.ZIP + "Phonenumber:- " + item.PhoneNumber + "Email:- " + item.Email);
+                    }
+                }
+            }
+        }
+        public void ByState(string state)
+        {
+            foreach (var data in dict)
+            {
+                if (dict.Keys.Equals(state))
+                {
+                    var statelist = data.Value.Where(x => x.Equals(state)).ToList();
+                    foreach (var item in statelist)
+                    {
+                        Console.WriteLine("First Name:- " + item.FirstName + "Last Name:- " + item.LastName + "City Name:-" + item.City + "State:- " + item.State + "ZIP code:- " + item.ZIP + "Phonenumber:- " + item.PhoneNumber + "Email:- " + item.Email);
+                    }
+                }
+            }
+        }
         public int CheckUnique(string name)
         {
             int flag = 0;
@@ -90,10 +118,6 @@ namespace AddressBookSystem
                     {
                         Console.WriteLine("First Name:- " + item.FirstName + "Last Name:- " + item.LastName + "City Name:-" + item.City + "State:- " + item.State + "ZIP code:- " + item.ZIP + "Phonenumber:- " + item.PhoneNumber + "Email:- " + item.Email);
                     }
-                }
-                else
-                {
-                    Console.WriteLine("The first name doesnot exits hear");
                 }
             }
         }
