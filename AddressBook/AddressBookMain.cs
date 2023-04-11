@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,39 +10,65 @@ namespace AddressBookSystem
     public class AddressBookMain
     {
         CreateContacts Contacts = new CreateContacts();
-        List<CreateContacts> AddressBookSystem = new List<CreateContacts>();
+        List<CreateContacts> AddressBook = new List<CreateContacts>();
+        Dictionary<string, List<CreateContacts>> dict = new Dictionary<string, List<CreateContacts>>();
         public void addcontact()
         {
             Console.WriteLine("Enter First Name");
             Contacts.FirstName = Console.ReadLine();
-            Console.WriteLine("Enetr Last Name");
-            Contacts.LastName = Console.ReadLine();
-            Console.WriteLine("Enter Address");
-            Contacts.Address = Console.ReadLine();
-            Console.WriteLine("Enter City");
-            Contacts.City = Console.ReadLine();
-            Console.WriteLine("Enter State");
-            Contacts.State = Console.ReadLine();
-            Console.WriteLine("Enter ZIP");
-            Contacts.ZIP = Console.ReadLine();
-            Console.WriteLine("Enetr Phone NUmber");
-            Contacts.PhoneNumber = Console.ReadLine();
-            Console.WriteLine("Enter Email");
-            Contacts.Email = Console.ReadLine();
+            int a = Unique(Contacts.FirstName);
+            if (a == 0)
+            {
+                Console.WriteLine("Enetr Last Name");
+                Contacts.LastName = Console.ReadLine();
+                Console.WriteLine("Enter Address");
+                Contacts.Address = Console.ReadLine();
+                Console.WriteLine("Enter City");
+                Contacts.City = Console.ReadLine();
+                Console.WriteLine("Enter State");
+                Contacts.State = Console.ReadLine();
+                Console.WriteLine("Enter ZIP");
+                Contacts.ZIP = Console.ReadLine();
+                Console.WriteLine("Enetr Phone NUmber");
+                Contacts.PhoneNumber = Console.ReadLine();
+                Console.WriteLine("Enter Email");
+                Contacts.Email = Console.ReadLine();
+                AddressBook.Add(Contacts);
+                dict.Add(Contacts.FirstName, AddressBook);
+            }
+        }
+        public int Unique(string name)
+        {
+            int flag = 0;
+            if (dict.Count != 0)
+            {
+                foreach (var data in dict)
+                {
+                    foreach (var item in data.Value)
+                    {
+                        if (data.Key.Equals(name))
+                        {
+                            Console.WriteLine("The Name You have given is Already Present");
+                            flag = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+            return flag;
         }
         public void Display()
         {
-            foreach (var data in AddressBookSystem)
+            foreach (var data in AddressBook)
             {
-                Console.WriteLine("First name: " + Contacts.FirstName + "\nLastname: " + Contacts.LastName + "\nAddress: " + Contacts.Address +
-                  "\nCity: " + Contacts.City + "\nState: " + Contacts.State + "\nZIP: " + Contacts.ZIP + "\nPhone Number: " + Contacts.PhoneNumber + "\nEmail: " + Contacts.Email);
+                Console.WriteLine("First name: " + data.FirstName + "\nLastname: " + data.LastName + "\nAddress: " + data.Address + "\nCity: " + data.City + "\nState: " + data.State + "\nZIP: " + data.ZIP + "\nPhone Number: " + data.PhoneNumber + "\nEmail: " + data.Email);
             }
         }
         public void Edit()
         {
             Console.WriteLine("Edit Using First Name");
             string name = Console.ReadLine();
-            foreach (var data in AddressBookSystem)
+            foreach (var data in AddressBook)
             {
                 if (data.FirstName == name)
                 {
@@ -97,14 +124,14 @@ namespace AddressBookSystem
         {
             Console.WriteLine("Enter name to delete contact");
             string name = Console.ReadLine();
-            foreach (var data in AddressBookSystem)
+            foreach (var data in AddressBook)
             {
                 if (data.FirstName.Equals(name))
                 {
                     Contacts = data;
                 }
             }
-            AddressBookSystem.Remove(Contacts);
+            AddressBook.Remove(Contacts);
         }
     }
 }
