@@ -1,10 +1,15 @@
-﻿using System;
+﻿
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AddressBook
+namespace AddressBookSystem
 {
     public class AddressBookMain
     {
-        Contact Contacts = new Contact();
+        CreateContacts Contacts = new CreateContacts();
         public void addcontact()
         {
             Console.WriteLine("Enter First Name");
@@ -18,7 +23,7 @@ namespace AddressBook
             Console.WriteLine("Enter State");
             Contacts.State = Console.ReadLine();
             Console.WriteLine("Enter ZIP");
-            Contacts.Zip = Console.ReadLine();
+            Contacts.ZIP = Console.ReadLine();
             Console.WriteLine("Enetr Phone NUmber");
             Contacts.PhoneNumber = Console.ReadLine();
             Console.WriteLine("Enter Email");
@@ -27,7 +32,7 @@ namespace AddressBook
         public void Display()
         {
             Console.WriteLine("First name: " + Contacts.FirstName + "\nLastname: " + Contacts.LastName + "\nAddress: " + Contacts.Address +
-                "\nCity: " + Contacts.City + "\nState: " + Contacts.State + "\nZIP: " + Contacts.Zip + "\nPhone Number: " + Contacts.PhoneNumber + "\nEmail: " + Contacts.Email);
+                "\nCity: " + Contacts.City + "\nState: " + Contacts.State + "\nZIP: " + Contacts.ZIP + "\nPhone Number: " + Contacts.PhoneNumber + "\nEmail: " + Contacts.Email);
         }
     }
 }
